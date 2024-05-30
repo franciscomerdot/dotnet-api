@@ -10,12 +10,12 @@ public interface CustomerProvider
 
 public class QueryCustomerRequest
 {
-    public string? Name { get; set; }
-    public bool? IsActive { get; set; }
+    public virtual string? Name { get; set; }
+    public virtual bool? IsActive { get; set; }
 }
 
 public class GetCustomerRequest
 {
-    public int Id { get; set; }
-    public bool IncludeContacts { get; set; }
+    public virtual int Id { get; set; }
+    public virtual bool IncludeContacts { get; set; }
 }

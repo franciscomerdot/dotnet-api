@@ -10,15 +10,15 @@ public interface CustomerContactProvider
 
 public class QueryCustomerContactRequest
 {
-    public int CustomerId { get; set; }
-    public string? Name { get; set; }
-    public bool? IsActive { get; set; }
+    public virtual int CustomerId { get; set; }
+    public virtual string? Name { get; set; }
+    public virtual bool? IsActive { get; set; }
 }
 
 public class GetCustomerContactRequest
 {
-    public int CustomerId { get; set; }
-    public int Id { get; set; }
+    public virtual int CustomerId { get; set; }
+    public virtual int Id { get; set; }
 }
 
 

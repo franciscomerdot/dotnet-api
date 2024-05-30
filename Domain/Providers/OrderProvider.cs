@@ -10,13 +10,13 @@ public interface OrderProvider
 
 public class QueryCustomerOrderRequest
 {
-    public int CustomerId { get; set; }
-    public string status { get; set; } = default!;
+    public virtual int CustomerId { get; set; }
+    public virtual string status { get; set; } = default!;
 }
 
 public class GetCustomerOrderRequest
 {
-    public int CustomerId { get; set; }
-    public int Id { get; set; }
+    public virtual int CustomerId { get; set; }
+    public virtual int Id { get; set; }
 }
 

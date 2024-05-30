@@ -14,36 +14,42 @@ public interface CustomerContactService
 
 public class CreateContactRequest
 {
-    public string Name { get; set; } = default!;
-    public string Email { get; set; } = default!;
-    public string Phone { get; set; } = default!;
-    public bool IsPrimary { get; set; }
+    public virtual int CustomerId { get; set; }
+    public virtual string Name { get; set; } = default!;
+    public virtual string Email { get; set; } = default!;
+    public virtual string Phone { get; set; } = default!;
+    public virtual bool IsPrimary { get; set; }
 }
 
 public class UpdateContactRequest
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = default!;
-    public string Email { get; set; } = default!;
-    public string Phone { get; set; } = default!;
+    public virtual int CustomerId { get; set; }
+    public virtual int Id { get; set; }
+    public virtual string Name { get; set; } = default!;
+    public virtual string Email { get; set; } = default!;
+    public virtual string Phone { get; set; } = default!;
 }
 
 public class EnableContactRequest
 {
-    public int Id { get; set; }
+    public virtual int CustomerId { get; set; }
+    public virtual int Id { get; set; }
 }
 
 public class DisableContactRequest
 {
-    public int Id { get; set; }
+    public virtual int CustomerId { get; set; }
+    public virtual int Id { get; set; }
 }
 
 public class MakePrimaryContactRequest
 {
-    public int Id { get; set; }
+    public virtual int CustomerId { get; set; }
+    public virtual int Id { get; set; }
 }
 
 public class DeleteContactRequest
 {
-    public int Id { get; set; }
+    public virtual int CustomerId { get; set; }
+    public virtual int Id { get; set; }
 }

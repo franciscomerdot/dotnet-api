@@ -13,26 +13,26 @@ public interface CustomerService
 
 public class CreateCustomerRequest
 {
-    public string Name { get; set; } = default!;
+    public virtual string Name { get; set; } = default!;
 }
 
 public class UpdateCustomerRequest
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = default!;
+    public virtual int Id { get; set; }
+    public virtual string Name { get; set; } = default!;
 }
 
 public class EnableCustomerRequest
 {
-    public int Id { get; set; }
+    public virtual int Id { get; set; }
 }
 
 public class DisableCustomerRequest
 {
-    public int Id { get; set; }
+    public virtual int Id { get; set; }
 }
 
 public class DeleteCustomerRequest
 {
-    public int Id { get; set; }
+    public virtual int Id { get; set; }
 }

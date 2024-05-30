@@ -5,16 +5,17 @@ namespace DotNetApi.Domain.Services;
 public interface OrderService
 {
     Task<Order> CreateOrder(CreateOrderRequest request);
-    Task<Order> CancelOrder(CancelOrderRequest request);
+    Task<Order> CancelCustomerOrder(CancelCustomerOrderRequest request);
 }
 
 public class CreateOrderRequest
 {
-    public int CustomerId { get; set; }
-    public decimal ServiceQty { get; set; }
+    public virtual int CustomerId { get; set; }
+    public virtual decimal ServiceQty { get; set; }
 }
 
-public class CancelOrderRequest
+public class CancelCustomerOrderRequest
 {
-    public int Id { get; set; }
+    public virtual int CustomerId { get; set; }
+    public virtual int Id { get; set; }
 }
