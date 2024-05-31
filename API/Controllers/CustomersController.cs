@@ -23,7 +23,7 @@ namespace MyApp.Namespace
         [HttpGet]
         public Task<Customer[]> Get([FromQuery] QueryCustomerRequest request)
         {
-            return this.customerProvider.GetCustomers(request);
+            return this.customerProvider.QueryCustomers(request);
         }
 
         [HttpGet("{Id}")]

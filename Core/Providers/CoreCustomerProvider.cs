@@ -17,7 +17,7 @@ public class CoreCustomerProvider : CustomerProvider
         this.mapper = mapper;
     }
 
-    public async Task<Customer[]> GetCustomers(QueryCustomerRequest request)
+    public async Task<Customer[]> QueryCustomers(QueryCustomerRequest request)
     {
         if (request == null)
         {
@@ -58,12 +58,19 @@ public class CoreCustomerProvider : CustomerProvider
             .Where(x => x.Id == request.Id)
             .AsQueryable();
 
-        if (!request.IncludeContacts)
+        if (request.IncludeContacts)
         {
-            query.Include(x => x.Contacts);
+            query = query.Include(x => x.Contacts);
         }
 
-        return mapper.Map<Customer>(await query.FirstOrDefaultAsync());
+        var customer = await query.FirstOrDefaultAsync();
+
+        if (customer == null)
+        {
+            throw new ArgumentException("Customer not found", nameof(request.Id));
+        }
+
+        return mapper.Map<Customer>(customer);
     }
 }
 

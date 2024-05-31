@@ -4,7 +4,7 @@ namespace DotNetApi.Domain.Providers;
 
 public interface CustomerProvider
 {
-    Task<Customer[]> GetCustomers(QueryCustomerRequest request);
+    Task<Customer[]> QueryCustomers(QueryCustomerRequest request);
     Task<Customer> GetCustomer(GetCustomerRequest request);
 }
 
