@@ -1,3 +1,6 @@
+using Data = DotNetApi.Core.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCoreDependencies();
+builder.Services.AddAutoMapper(typeof(Data.Mappers.CustomerMapper).Assembly);
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -18,6 +22,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+
+var rootScope = app.Services.CreateScope();
+rootScope.ServiceProvider
+   .GetRequiredService<Data.DataContext>()
+   .Database
+   .Migrate();
 
 app.Run();
 

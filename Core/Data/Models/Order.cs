@@ -1,10 +1,10 @@
-namespace DotNetApi.Domain.DTOs;
+namespace DotNetApi.Core.Data.Models;
 
 public class Order
 {
     public int Id { get; set; }
     public int CustomerId { get; set; }
-    public string CustomerName { get; set; } = default!;
+    public Customer Customer { get; set; } = default!;
     public string OrderNumber { get; set; } = default!;
     public string Status { get; set; } = default!;
     public decimal Total { get; set; }
