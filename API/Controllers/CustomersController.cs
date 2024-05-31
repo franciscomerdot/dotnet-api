@@ -39,8 +39,9 @@ namespace MyApp.Namespace
         }
 
         [HttpPut("{Id}")]
-        public Task<Customer> Put([FromBody] CustomUpdateCustomerRequest request)
+        public Task<Customer> Put(int Id, [FromBody] UpdateCustomerRequest request)
         {
+            request.Id = Id;
             return this.customerService.UpdateCustomer(request);
         }
 
@@ -52,12 +53,6 @@ namespace MyApp.Namespace
     }
 
     public class CustomGetCustomerRequest : GetCustomerRequest
-    {
-        [FromRoute]
-        public override int Id { get; set; }
-    }
-
-    public class CustomUpdateCustomerRequest : UpdateCustomerRequest
     {
         [FromRoute]
         public override int Id { get; set; }

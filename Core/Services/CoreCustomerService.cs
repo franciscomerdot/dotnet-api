@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using DotNetApi.Domain.DTOs;
 using DotNetApi.Domain.Services;
 using DotNetApi.Core.Data;
@@ -45,24 +46,88 @@ public class CoreCustomerService : CustomerService
         return this.mapper.Map<Customer>(customer);
     }
 
-    public Task<Customer> UpdateCustomer(UpdateCustomerRequest request)
+    private async Task<DataModel.Customer> GetCustomerById(int id)
     {
-        return Task.FromResult(new Customer());
+        if (id <= 0)
+        {
+            throw new ArgumentException("Id is required", "Id");
+        }
+
+        var customer = await this.dataContext.Customers.FirstOrDefaultAsync(x => x.Id == id);
+
+        if (customer == null)
+        {
+            throw new ArgumentException("Customer not found", nameof(id));
+        }
+
+        return customer;
     }
 
-    public Task<Customer> EnableCustomer(EnableCustomerRequest request)
+    public async Task<Customer> UpdateCustomer(UpdateCustomerRequest request)
     {
-        return Task.FromResult(new Customer());
+        if (request == null)
+        {
+            throw new ArgumentNullException(nameof(request));
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Name))
+        {
+            throw new ArgumentException("Name is required", nameof(request.Name));
+        }
+
+        var customer = await this.GetCustomerById(request.Id);
+
+        customer.Name = request.Name;
+
+        this.dataContext.SaveChanges();
+
+        return this.mapper.Map<Customer>(customer);
     }
 
-    public Task<Customer> DisableCustomer(DisableCustomerRequest request)
+    public async Task<Customer> EnableCustomer(EnableCustomerRequest request)
     {
-        return Task.FromResult(new Customer());
+        if (request == null)
+        {
+            throw new ArgumentNullException(nameof(request));
+        }
+
+        var customer = await this.GetCustomerById(request.Id);
+
+        customer.IsActive = true;
+
+        this.dataContext.SaveChanges();
+
+        return this.mapper.Map<Customer>(customer);
     }
 
-    public Task DeleteCustomer(DeleteCustomerRequest request)
+    public async Task<Customer> DisableCustomer(DisableCustomerRequest request)
     {
-        return Task.CompletedTask;
+        if (request == null)
+        {
+            throw new ArgumentNullException(nameof(request));
+        }
+
+        var customer = await this.GetCustomerById(request.Id);
+
+        customer.IsActive = false;
+
+        this.dataContext.SaveChanges();
+
+        return this.mapper.Map<Customer>(customer);
+    }
+
+    public async Task DeleteCustomer(DeleteCustomerRequest request)
+    {
+        if (request == null)
+        {
+            throw new ArgumentNullException(nameof(request));
+        }
+
+        var customer = await this.GetCustomerById(request.Id);
+
+        customer.IsDeleted = true;
+
+        this.dataContext.SaveChanges();
     }
 }
 
