@@ -23,7 +23,7 @@ namespace MyApp.Namespace
         [HttpGet()]
         public Task<Contact[]> Get([FromQuery] CustomQueryCustomerContactRequest request)
         {
-            return this.customerContactProvider.GetCustomerContacts(request);
+            return this.customerContactProvider.QueryCustomerContacts(request);
         }
 
         [HttpGet("{Id}")]
@@ -33,20 +33,25 @@ namespace MyApp.Namespace
         }
 
         [HttpPost]
-        public Task<Contact> Post([FromBody] CustomCreateCutomerContactRequest request)
+        public Task<Contact> Post(int CustomerId, [FromBody] CreateContactRequest request)
         {
+            request.CustomerId = CustomerId;
             return this.customerContactService.CreateContact(request);
         }
 
         [HttpPut("{Id}")]
-        public Task<Contact> Put([FromBody] CustomUpdateCustomerContactRequest request)
+        public Task<Contact> Put(int CustomerId, int Id, [FromBody] UpdateContactRequest request)
         {
+            request.CustomerId = CustomerId;
+            request.Id = Id;
             return this.customerContactService.UpdateContact(request);
         }
 
         [HttpDelete("{Id}")]
-        public Task Delete([FromRoute] CustomDeleteCustomerContactRequest request)
+        public Task Delete(int CustomerId, int Id, [FromRoute] DeleteContactRequest request)
         {
+            request.CustomerId = CustomerId;
+            request.Id = Id;
             return this.customerContactService.DeleteContact(request);
         }
     }
@@ -58,30 +63,6 @@ namespace MyApp.Namespace
     }
 
     public class CustomGetCustomerContactRequest : GetCustomerContactRequest
-    {
-        [FromRoute]
-        public override int CustomerId { get; set; }
-
-        [FromRoute]
-        public override int Id { get; set; }
-    }
-
-    public class CustomCreateCutomerContactRequest : CreateContactRequest
-    {
-        [FromRoute]
-        public override int CustomerId { get; set; }
-    }
-
-    public class CustomUpdateCustomerContactRequest : UpdateContactRequest
-    {
-        [FromRoute]
-        public override int CustomerId { get; set; }
-
-        [FromRoute]
-        public override int Id { get; set; }
-    }
-
-    public class CustomDeleteCustomerContactRequest : DeleteContactRequest
     {
         [FromRoute]
         public override int CustomerId { get; set; }
