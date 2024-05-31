@@ -11,7 +11,7 @@ public interface OrderProvider
 public class QueryCustomerOrderRequest
 {
     public virtual int CustomerId { get; set; }
-    public virtual string status { get; set; } = default!;
+    public virtual string? Status { get; set; }
 }
 
 public class GetCustomerOrderRequest

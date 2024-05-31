@@ -48,10 +48,8 @@ namespace MyApp.Namespace
         }
 
         [HttpDelete("{Id}")]
-        public Task Delete(int CustomerId, int Id, [FromRoute] DeleteContactRequest request)
+        public Task Delete([FromRoute] DeleteContactRequest request)
         {
-            request.CustomerId = CustomerId;
-            request.Id = Id;
             return this.customerContactService.DeleteContact(request);
         }
     }

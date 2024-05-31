@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MyApp.Namespace
 {
-    [Route("cutomers/{CusotmerId}/orders")]
+    [Route("cutomers/{CustomerId}/orders")]
     [ApiController]
     public class CustomerOrdersController : ControllerBase
     {
@@ -33,14 +33,15 @@ namespace MyApp.Namespace
         }
 
         [HttpPost]
-        public Task<Order> Post([FromQuery] CustomCreateCutomerOrderRequest request)
+        public Task<Order> Post(int CustomerId, [FromBody] CreateOrderRequest request)
         {
+            request.CustomerId = CustomerId;
             return this.customerOrderService.CreateOrder(request);
         }
 
 
         [HttpDelete("{Id}")]
-        public Task<Order> Delete([FromQuery] CustomCancelCustomerOrderRequest request)
+        public Task<Order> Delete([FromRoute] CancelCustomerOrderRequest request)
         {
             return this.customerOrderService.CancelCustomerOrder(request);
         }
@@ -53,21 +54,6 @@ namespace MyApp.Namespace
     }
 
     public class CustomGetCustomerOrderRequest : GetCustomerOrderRequest
-    {
-        [FromRoute]
-        public override int CustomerId { get; set; }
-
-        [FromRoute]
-        public override int Id { get; set; }
-    }
-
-    public class CustomCreateCutomerOrderRequest : CreateOrderRequest
-    {
-        [FromRoute]
-        public override int CustomerId { get; set; }
-    }
-
-    public class CustomCancelCustomerOrderRequest : CancelCustomerOrderRequest
     {
         [FromRoute]
         public override int CustomerId { get; set; }
