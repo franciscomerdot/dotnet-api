@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    expose:
+      - "5432"
+    networks:
+        - dotnet_network
+  api:
+    image: api
+    container_name: api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "Host=postgres;Port=5432;Database=postgres;Username=postgres;Password=postgres"
+      API_KEY_READER: "reader"
+      API_KEY_ADMIN: "admin"
+    networks:
+        - dotnet_network
+networks:
+  dotnet_network:
+    driver: bridge
