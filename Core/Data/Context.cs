@@ -5,9 +5,9 @@ namespace DotNetApi.Core.Data;
 
 public class DataContext : DbContext
 {
-    public DbSet<Customer> Customers { get; set; } = default!;
-    public DbSet<Order> Orders { get; set; } = default!;
-    public DbSet<Contact> Contacts { get; set; } = default!;
+    public virtual DbSet<Customer> Customers { get; set; } = default!;
+    public virtual DbSet<Order> Orders { get; set; } = default!;
+    public virtual DbSet<Contact> Contacts { get; set; } = default!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
