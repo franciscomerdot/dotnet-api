@@ -1,5 +1,6 @@
 using Data = DotNetApi.Core.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +9,33 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCoreDependencies();
+builder.Services.AddAuthentication(ApiKeyAuthenticationDefaults.AuthenticationScheme)
+    .AddApiKey();
 builder.Services.AddAutoMapper(typeof(Data.Mappers.CustomerMapper).Assembly);
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("API Key", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "X-API-Key",
+        Type = SecuritySchemeType.ApiKey,
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "API Key"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
 
 var app = builder.Build();
 
@@ -21,6 +47,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
 
 var rootScope = app.Services.CreateScope();

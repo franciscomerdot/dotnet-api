@@ -7,7 +7,7 @@ using Data = DotNetApi.Core.Data;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-public static class CoreDependenciesExtension
+public static class DependenciesExtension
 {
     public static IServiceCollection AddCoreDependencies(
         this IServiceCollection services)
